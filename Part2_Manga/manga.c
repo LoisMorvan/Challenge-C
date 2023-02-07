@@ -49,7 +49,7 @@ void print_1manga (Manga m) {
 
 void print_manga (Manga* mt, int size) {
     for (int i = 0 ; i < size ; i++) {
-        printf("\nTitre: %s\nAge: %d\nPrix: %.2f\n", (*(mt+i)).titre, mt[i].age, mt[i].prix);
+        printf("\n\t(%d)\nTitre: %s\nAge: %d\nPrix: %.2f\n", i+1, (*(mt+i)).titre, mt[i].age, mt[i].prix);
     }
 }
 
@@ -97,6 +97,25 @@ float price_of_manga (Manga* m, int size, char* titre) {
     return -1;
 }
 
+float sum_cart (Manga* m, char* num) {
+    int i = 1;
+    float sum = 0;
+    char indice[2];
+    while (num[i-1] != '\0') {
+        if (num[i-1] != '|' && num[i] == '|') {
+            indice[0] = num[i-1];
+            sum += m[atoi(indice)-1].prix;
+        }
+        if (num[i-1] != '|' && num[i] != '|') {
+            indice[0] = num[i-1];
+            indice[1] = num[i];
+            sum += m[atoi(indice)-1].prix;
+        }
+        i++;
+    }
+    return sum;
+}
+
 void menu (Manga* m, int size) {
     printf("\t--- Bienvenu dans votre espace Manga ---\n\n");
 
@@ -133,6 +152,13 @@ void menu (Manga* m, int size) {
                     printf("--- Le prix de ce manga est %f ---\n", prix);
                 }
                 break;
+            case 5:
+                print_manga(m, size);
+                printf("Quels mangas faut-il ajouter ? (entrez les numéros a ajouter séparé par | exemple: 2|3|5)\n>");
+                char* cart = malloc(sizeof(char)*50);
+                scanf(" %s", cart);
+                printf("La somme du panier est de %f", sum_cart(m, cart));
+                break;
             default:
                 printf("ERROR");
         }
@@ -144,6 +170,7 @@ int main(void) {
     int nb;
     scanf("%d", &nb);
     Manga* m = add_manga(nb);
+
     menu(m, nb);
 
     return 0;
