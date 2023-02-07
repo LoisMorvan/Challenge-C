@@ -48,7 +48,7 @@ Codage1* init_codage1(int n){
 
 char* saisie_chaine() {
 	char* chaine = (char*)malloc(sizeof(char));
-	printf("Saisir une chaine de caractère : ");
+	printf("Saisir une chaine de caractere : ");
 	scanf("%s", chaine);
 	return chaine;
 }
@@ -85,7 +85,7 @@ void remplir_codage(Codage1* codage, char* chaine, int n) {
 
 int recherche(Codage1* codage, int n) {
 	char lettre;
-	printf("Saisir la lettre à rechercher : ");
+	printf("Saisir la lettre a rechercher : ");
 	scanf(" %c", &lettre);
 	int i;
 	int nb = 0;
