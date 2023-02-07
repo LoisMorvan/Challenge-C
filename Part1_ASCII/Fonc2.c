@@ -16,8 +16,8 @@ void afficher_letter(ASCII_Letter letter) {
 	printf("%c %d \n", letter.code, letter.letter);
 }
 
-void afficher_crypte(Codage1 code) {
-	printf("%c %d \n", code.crypte.code, code.crypte.letter);
+void afficher_crypte(Codage1 codage) {
+	printf("%c %d \n", codage.crypte.code, codage.crypte.letter);
 }
 
 void afficher_tab(ASCII_Letter *tab, int len) {
@@ -34,12 +34,23 @@ void afficher_codage(Codage1 *codage, int len) {
 	}
 }
 
+void afficher_nombre(nb) {
+	printf("%d", nb);
+}
+
 ASCII_Letter* init_tab(int n){
     return (ASCII_Letter*) malloc(n * sizeof(ASCII_Letter));
 }
 
 Codage1* init_codage1(int n){
     return (Codage1*) malloc(n * sizeof(Codage1));
+}
+
+char* saisie_chaine() {
+	char* chaine = (char*)malloc(sizeof(char));
+	printf("Saisir une chaine de caractère : ");
+	scanf("%s", chaine);
+	return chaine;
 }
 
 ASCII_Letter create_ascii() {
@@ -51,7 +62,6 @@ ASCII_Letter create_ascii() {
 	ascii.code = (int) letter;
 	return ascii;
 }
-
 
 void remplir_tab(ASCII_Letter *tab, char* chaine) {
 	int i;
@@ -73,6 +83,20 @@ void remplir_codage(Codage1* codage, char* chaine, int n) {
 	}
 }
 
+int recherche(Codage1* codage, int n) {
+	char lettre;
+	printf("Saisir la lettre à rechercher : ");
+	scanf(" %c", &lettre);
+	int i;
+	int nb = 0;
+	for(i = 0; i < n; i++) {
+		if(codage[i].lettre.letter == lettre) {
+			nb += 1;
+		}	
+	}
+	return nb;
+}
+
 int main() {
 	ASCII_Letter ascii;
 	
@@ -82,8 +106,7 @@ int main() {
 	char* chaine = (char*)malloc(sizeof(char));
 	int n;
 	
-	printf("Saisir une chaine de caractère : ");
-	scanf("%s", chaine);
+	chaine = saisie_chaine();
 	
 	ASCII_Letter* tab;
 	Codage1* codage;
@@ -97,6 +120,9 @@ int main() {
 	
 	remplir_codage(codage, chaine, 5);
 	afficher_codage(codage, n);
+	
+	int nb = recherche(codage, n);
+	afficher_nombre(nb);
 	
 	return 0;
 }
